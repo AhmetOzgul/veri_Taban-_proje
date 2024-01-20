@@ -1,0 +1,30 @@
+package com.example.vtys.controller;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.vtys.entity.Task;
+import com.example.vtys.service.TaskService;
+
+
+@Controller
+@RequestMapping("/remaining-days")
+public class RemainingDaysController {
+	
+    private TaskService taskService;
+
+    public RemainingDaysController(TaskService taskService) {
+		super();
+		this.taskService = taskService;
+	}
+
+	// Bu metod, belirli bir görevin kalan günlerini döndürür
+
+}

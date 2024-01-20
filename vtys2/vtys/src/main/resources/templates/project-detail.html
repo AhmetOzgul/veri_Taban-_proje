@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">CRUD</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		  <ul class="navbar-nav">
+			<li class="nav-item ">
+			  <a class="nav-link" href="/projects">Ana Sayfa<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/users">Çalışan Listesi</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/tasks">Görev Listesi</a>
+			  </li>
+		  </ul>
+		</div>
+	  </nav>
+	  <br>
+	</br>
+<div class="container mt-5">
+    <h2>Proje Detayları</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${project.projectName}"></h5>
+            <p class="card-text">
+                <strong>Başlangıç Tarihi:</strong> <span th:text="${project.startDate}"></span><br>
+                <strong>Bitiş Tarihi:</strong> <span th:text="${project.endDate}"></span>
+            </p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Görevler</h3>
+			<a th:href = "@{/tasks/add}" class="btn btn-primary btn-sm mb-3">Görev Ekle</a>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Göreve Atanan Kişi</th>
+                <th scope="col">Görev İsmi</th>
+                <th scope="col">Başlangıç Tarihi</th>
+                <th scope="col">Bitiş Tarihi</th>
+                <th scope="col">Devam Durumu</th>
+                <th scope="col">Kalan Süre</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task, iterStat : ${project.tasks}">
+            <th scope="row" th:text="${iterStat.count}"></th>
+            <td th:text="${task.user.firstName}"></td>
+            <td th:text="${task.taskName}"></td>
+            <td th:text="${task.startDate}"></td>
+            <td th:text="${task.endDate}"></td>
+            <td th:text="${task.state}"></td>
+			<td th:text="${task.remainingDays}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

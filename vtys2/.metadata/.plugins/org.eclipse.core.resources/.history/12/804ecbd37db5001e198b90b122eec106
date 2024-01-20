@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">CRUD</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		  <ul class="navbar-nav">
+			<li class="nav-item active">
+			  <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/users">Çalışan Listesi</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/projects">Proje Listesi</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/tasks">Görev Listesi</a>
+			</li>
+		  </ul>
+		</div>
+	</nav>
+	<br>
+	<div class="container mt-5">
+		<h2>User Details</h2>
+
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${user.firstName + ' ' + user.lastName}"></h5>
+				<p class="card-text">
+					<strong>E-mail :</strong> <span th:text="${user.email}"></span><br>
+				</p>
+			</div>
+		</div>
+
+		<h3 class="mt-4">Görevler</h3>
+
+		<table class="table table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">#</th>
+          <th scope="col">Proje İsmi</th>
+					<th scope="col">Görev İsmi</th>
+					<th scope="col">Başlangıç Tarihi</th>
+					<th scope="col">Bitiş Tarihi</th>
+					<th scope="col">Durum</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="task, iterStat : ${user.tasks}">
+					<th scope="row" th:text="${iterStat.count}"></th>
+          <td th:text="${task.project.projectName}"></td>
+          <td th:text="${task.taskName}"></td>
+					<td th:text="${task.startDate}"></td>
+					<td th:text="${task.endDate}"></td>
+					<td th:text="${task.state}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+package com.example.vtys.controller;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.vtys.entity.Task;
+import com.example.vtys.service.TaskService;
+
+
+@Controller
+@RequestMapping("/remaining-days")
+public class RemainingDaysController {
+	
+    private TaskService taskService;
+
+    public RemainingDaysController(TaskService taskService) {
+		super();
+		this.taskService = taskService;
+	}
+
+	// Bu metod, belirli bir görevin kalan günlerini döndürür
+    @GetMapping("/tasks/remaining-days")
+    public String getRemainingDays(@PathVariable Long id, Model model) {
+        Task task = taskService.getTaskById(id);
+
+        // Hesaplanan kalan gün sayısı
+        long remainingDays = calculateRemainingDays(task.getEndDate());
+
+        model.addAttribute("task", task);
+        model.addAttribute("remainingDays", remainingDays);
+        return "remaining_days";
+    }
+
+    // kalan günleri hesaplar
+    private long calculateRemainingDays(Date endDate) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate endLocalDate = endDate.toLocalDate();
+
+        // Hesaplanan kalan gün sayısı
+        long remainingDays = ChronoUnit.DAYS.between(currentDate, endLocalDate);
+
+        return remainingDays;
+    }
+}
